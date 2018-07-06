@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from Tkinter import *
 import requests
 import datetime
@@ -5,7 +6,7 @@ import re
 import sys
 
 def data_output(data):
-    m_symbol = '\xb0' + 'C'
+    m_symbol =u'\u2103'
     '''print('---------------------------------------')
     print"city",json_data.get('city').get('name')
     print('---------------------------------------')
@@ -32,43 +33,43 @@ def data_output(data):
     print"date",data['dt_txt']
     print('---------------------------------------')'''
 
-    city_lab = Label(m, text="City:")
-    city_lab.grid(row=5, column=0)
+    #city_lab = Label(m, text="City:",bg='#8ee5ee')
+    #city_lab.grid(row=5, column=0)
     city_data.config(text=json_data['city']['name'])
     city_data.grid(row=5, column=1)
-    city_ab = Label(m, text="Country:")
-    city_ab.grid(row=5, column=2)
+    #city_ab = Label(m, text="Country:",bg='#8ee5ee')
+    #city_ab.grid(row=5, column=2)
     country_data.config(text=json_data['city']['country'])
     country_data.grid(row=5, column=3)
-    city_ab = Label(m, text="max temp")
+    city_ab = Label(m, text="max temp",bg='#8ee5ee',font=("Helvetica",10),fg='#ee7600')
     city_ab.grid(row=6, column=0)
     temp_max.config(text=str(data['main']['temp_max']) + m_symbol)
     temp_max.grid(row=6, column=1)
-    city_ab = Label(m, text="mim temp:")
+    city_ab = Label(m, text="mim temp:",bg='#8ee5ee',font=("Helvetica",10),fg='#ee7600')
     city_ab.grid(row=6, column=2)
     temp_min.config(text=str(data['main']['temp_min']) + m_symbol)
     temp_min.grid(row=6, column=3)
-    city_ab = Label(m, text="humidity:")
+    city_ab = Label(m, text="humidity:",bg='#8ee5ee',font=("Helvetica",10),fg='#ee7600')
     city_ab.grid(row=7, column=0)
     humidity.config(text=data['main']['humidity'])
     humidity.grid(row=7, column=1)
-    city_ab = Label(m, text="pressure:")
+    city_ab = Label(m, text="pressure:",bg='#8ee5ee',font=("Helvetica",10),fg='#ee7600')
     city_ab.grid(row=7, column=2)
     pressure.config(text=data['main']['pressure'])
     pressure.grid(row=7, column=3)
-    city_ab = Label(m, text="wind speed:")
+    city_ab = Label(m, text="wind speed:",bg='#8ee5ee',font=("Helvetica",10),fg='#ee7600')
     city_ab.grid(row=8, column=0)
     wind.config(text=data['wind']['speed'])
     wind.grid(row=8, column=1)
-    city_ab = Label(m, text="clouds:")
+    city_ab = Label(m, text="clouds:",bg='#8ee5ee',font=("Helvetica",10),fg='#ee7600')
     city_ab.grid(row=8, column=2)
     cloud.config(text=data['clouds']['all'])
     cloud.grid(row=8, column=3)
-    city_ab = Label(m, text="weather:")
+    city_ab = Label(m, text="weather:",bg='#8ee5ee',font=("Helvetica",10),fg='#ee7600')
     city_ab.grid(row=9, column=0)
     weather.config(text= data['weather'][0]['main'])
     weather.grid(row=9, column=1)
-    city_ab = Label(m, text="date:")
+    city_ab = Label(m, text="date:",bg='#8ee5ee',font=("Helvetica",10),fg='#ee7600')
     city_ab.grid(row=9, column=2)
     date.config(text=data['dt_txt'])
     date.grid(row=9,column=3)
@@ -105,10 +106,10 @@ def entry():
     #print y
     t=city_entry.get()
     #t= raw_input("enter the city")
-    r = requests.get(url='http://api.openweathermap.org/data/2.5/forecast?q='+ t +'&appid=354e6f3729c970f2810cf814c749f6ea')
+    r = requests.get(url='http://api.openweathermap.org/data/2.5/forecast?q='+ t +'&mode=json&units=metric&&appid=354e6f3729c970f2810cf814c749f6ea')
     global json_data
     json_data = r.json()
-    #print(json_data)
+    print(json_data)
     list_items =json_data['list']
     #return list_items
     #print list_items
@@ -140,29 +141,30 @@ def entry():
 def fetch_data():
     entry()
 
-m = Tk(className='Weather Forecast')
-
-city_label = Label(m, text="Enter a city: ")
+w= Tk(className='Weather Forecast')
+m=Frame(w,bg='#8ee5ee')
+m.pack()
+city_label = Label(m, text="Enter a city: ",bg='#8ee5ee',fg='#ee7600')
 city_label.grid(row=0, column=0)
-city_entry= Entry(m)
+city_entry= Entry(m,bg="#008b8b")
 city_entry.grid(row=0, column=1)
-show = Button(m, text="Show",command=fetch_data)
+show = Button(m, text="Show",command=fetch_data,bg='#ee7600',activeforeground="yellow",activebackground="#008b8b")
 
 show.grid(row=1, column=1)
-city_data = Label(m)
-country_data = Label(m)
-temp_max = Label(m)
-temp_min = Label(m)
-humidity = Label(m)
-pressure = Label(m)
-wind = Label(m)
-cloud = Label(m)
-weather = Label(m)
-date=Label(m)
+city_data = Label(m,bg='#8ee5ee',font=("Helvetica",40,'bold'),fg='#ee7600')
+country_data = Label(m,bg='#8ee5ee',font=("Helvetica",40,'bold'),fg='#ee7600')
+temp_max = Label(m,bg='#8ee5ee',font=("Helvetica",20,'bold'),fg='#ee7600')
+temp_min = Label(m,bg='#8ee5ee',font=("Helvetica",20,'bold'),fg='#ee7600')
+humidity = Label(m,bg='#8ee5ee',font=("Helvetica",10,'bold'),fg='#ee7600')
+pressure = Label(m,bg='#8ee5ee',font=("Helvetica",10,'bold'),fg='#ee7600')
+wind = Label(m,bg='#8ee5ee',font=("Helvetica",10,'bold'),fg='#ee7600')
+cloud = Label(m,bg='#8ee5ee',font=("Helvetica",10,'bold'),fg='#ee7600')
+weather = Label(m,bg='#8ee5ee',font=("Helvetica",10,'bold'),fg='#ee7600')
+date=Label(m,bg='#8ee5ee',font=("Helvetica",10,'bold'),fg='#ee7600')
 
-next=Button(m,text=">",width=2,height=2,textvariable=counter1,command=nex)
+next=Button(m,text=">",width=2,height=2,textvariable=counter1,command=nex,bg='#ee7600',activeforeground="yellow",activebackground="#008b8b")
 next.grid(row=10,column=2)
-previous=Button(m,text="<",width=2,height=2,textvariable=counter2,command=pre)
+previous=Button(m,text="<",width=2,height=2,textvariable=counter2,command=pre,bg='#ee7600',activeforeground="yellow",activebackground="#008b8b")
 previous.grid(row=10,column=1)
 m.mainloop()
 
