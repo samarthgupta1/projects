@@ -4,7 +4,11 @@ import requests
 import datetime
 import re
 import sys
+from io import BytesIO
+import urllib  # not urllib.request
+from PIL import Image, ImageTk
 
+o=0
 def data_output(data):
     m_symbol =u'\u2103'
     '''print('---------------------------------------')
@@ -33,6 +37,9 @@ def data_output(data):
     print"date",data['dt_txt']
     print('---------------------------------------')'''
 
+    #print "weather id",data['weather'][0]['id']
+    #global o
+    #o=data['weather'][0]['id']
     #city_lab = Label(m, text="City:",bg='#8ee5ee')
     #city_lab.grid(row=5, column=0)
     city_data.config(text=json_data['city']['name'])
@@ -66,13 +73,18 @@ def data_output(data):
     cloud.config(text=data['clouds']['all'])
     cloud.grid(row=8, column=3)
     city_ab = Label(m, text="weather:",bg='#8ee5ee',font=("Helvetica",10),fg='#ee7600')
-    city_ab.grid(row=9, column=0)
-    weather.config(text= data['weather'][0]['main'])
-    weather.grid(row=9, column=1)
-    city_ab = Label(m, text="date:",bg='#8ee5ee',font=("Helvetica",10),fg='#ee7600')
     city_ab.grid(row=9, column=2)
-    date.config(text=data['dt_txt'])
-    date.grid(row=9,column=3)
+    weather.config(text= data['weather'][0]['main'])
+    weather.grid(row=9, column=3)
+    city_ab = Label(m, text="date:",bg='#8ee5ee',font=("Helvetica",10),fg='#ee7600')
+    city_ab.grid(row=9, column=0)
+    #a=re.match(r"(\d+)-(\d+)-(\d+)",data['dt_txt'])
+    s=re.match(r"(\d+)-(\d+)-(\d+)",data['dt_txt'])
+    a=s.group()
+    date.config(text=a)
+    date.grid(row=9,column=1)
+
+
 
 
 #global counter
@@ -109,7 +121,7 @@ def entry():
     r = requests.get(url='http://api.openweathermap.org/data/2.5/forecast?q='+ t +'&mode=json&units=metric&&appid=354e6f3729c970f2810cf814c749f6ea')
     global json_data
     json_data = r.json()
-    print(json_data)
+    #print(json_data)
     list_items =json_data['list']
     #return list_items
     #print list_items
@@ -138,9 +150,135 @@ def entry():
     #print(index)
     #print "X",(list_items[index])
     data_output(list_items[index])
+    global o
+    o=list_items[index]['weather'][0]['id']
+    print o
+    if(o==800):
+        url = "http://openweathermap.org/img/w/01d.png"
+
+        u = urllib.urlopen(url)
+        raw_data = u.read()
+        u.close()
+
+        im = Image.open(BytesIO(raw_data))
+        image = ImageTk.PhotoImage(im)
+        label = Label(m,image=image,bg='#8ee5ee')
+        label.place(x=370,y=220)
+        mainloop()
+    elif(o==801):
+        url = "http://openweathermap.org/img/w/02d.png"
+
+        u = urllib.urlopen(url)
+        raw_data = u.read()
+        u.close()
+
+        im = Image.open(BytesIO(raw_data))
+        image = ImageTk.PhotoImage(im)
+        label = Label(m, image=image, bg='#8ee5ee')
+        label.place(x=370, y=220)
+        mainloop()
+    elif (o==802):
+        url = "http://openweathermap.org/img/w/03d.png"
+
+        u = urllib.urlopen(url)
+        raw_data = u.read()
+        u.close()
+
+        im = Image.open(BytesIO(raw_data))
+        image = ImageTk.PhotoImage(im)
+        label = Label(m, image=image, bg='#8ee5ee')
+        label.place(x=370, y=220)
+        mainloop()
+    elif (o==803 or 0==804):
+        url = "http://openweathermap.org/img/w/04d.png"
+
+        u = urllib.urlopen(url)
+        raw_data = u.read()
+        u.close()
+
+        im = Image.open(BytesIO(raw_data))
+        image = ImageTk.PhotoImage(im)
+        label = Label(m, image=image, bg='#8ee5ee')
+        label.place(x=370, y=220)
+        mainloop()
+    elif (o==300 or o==301 or o==302 or o==310 or o==311 or o==312 or o==313 or o==314 or o==321 or o==520 or o==521 or o==522 or o==531):
+        url = "http://openweathermap.org/img/w/09d.png"
+
+        u = urllib.urlopen(url)
+        raw_data = u.read()
+        u.close()
+
+        im = Image.open(BytesIO(raw_data))
+        image = ImageTk.PhotoImage(im)
+        label = Label(m, image=image, bg='#8ee5ee')
+        label.place(x=370, y=220)
+        mainloop()
+    elif (o==500 or o==501 or o==502 or o==503 or o==504):
+        url = "http://openweathermap.org/img/w/10d.png"
+
+        u = urllib.urlopen(url)
+        raw_data = u.read()
+        u.close()
+
+        im = Image.open(BytesIO(raw_data))
+        image = ImageTk.PhotoImage(im)
+        label = Label(m, image=image, bg='#8ee5ee')
+        label.place(x=370, y=220)
+        mainloop()
+    elif (o==200 or o==201 or o==202 or o==210 or o==211 or o==212 or o==221 or o==230 or o==231 or o==232):
+        url = "http://openweathermap.org/img/w/11d.png"
+
+        u = urllib.urlopen(url)
+        raw_data = u.read()
+        u.close()
+
+        im = Image.open(BytesIO(raw_data))
+        image = ImageTk.PhotoImage(im)
+        label = Label(m, image=image, bg='#8ee5ee')
+        label.place(x=370, y=220)
+        mainloop()
+    elif (o==511 or o==600 or o==601 or o==602 or o==611 or o==612 or o==615 or o==616 or o==620 or o==621 or o==622):
+        url = "http://openweathermap.org/img/w/13d.png"
+
+        u = urllib.urlopen(url)
+        raw_data = u.read()
+        u.close()
+
+        im = Image.open(BytesIO(raw_data))
+        image = ImageTk.PhotoImage(im)
+        label = Label(m, image=image, bg='#8ee5ee')
+        label.place(x=370, y=220)
+        mainloop()
+    elif (o==701 or o==711 or o==721 or o==731 or o==741 or o==751 or o==761 or o==762 or o==771 or o==781):
+        url = "http://openweathermap.org/img/w/50d.png"
+
+        u = urllib.urlopen(url)
+        raw_data = u.read()
+        u.close()
+
+        im = Image.open(BytesIO(raw_data))
+        image = ImageTk.PhotoImage(im)
+        label = Label(m, image=image, bg='#8ee5ee')
+        label.place(x=370, y=220)
+        mainloop()
+    else:
+        print "no image"
+
+
 def fetch_data():
     entry()
-
+'''
+def image():
+    if o==501:
+        url = "http://openweathermap.org/img/w/10d.png"
+        u = urllib.urlopen(url)
+        raw_data = u.read()
+        u.close()
+        im = Image.open(BytesIO(raw_data))
+        image = ImageTk.PhotoImage(im)
+        label.config(image=image)
+        label.grid(row=13,column=0)
+'''
 w= Tk(className='Weather Forecast')
 m=Frame(w,bg='#8ee5ee')
 m.pack()
@@ -159,12 +297,28 @@ humidity = Label(m,bg='#8ee5ee',font=("Helvetica",10,'bold'),fg='#ee7600')
 pressure = Label(m,bg='#8ee5ee',font=("Helvetica",10,'bold'),fg='#ee7600')
 wind = Label(m,bg='#8ee5ee',font=("Helvetica",10,'bold'),fg='#ee7600')
 cloud = Label(m,bg='#8ee5ee',font=("Helvetica",10,'bold'),fg='#ee7600')
-weather = Label(m,bg='#8ee5ee',font=("Helvetica",10,'bold'),fg='#ee7600')
-date=Label(m,bg='#8ee5ee',font=("Helvetica",10,'bold'),fg='#ee7600')
+weather = Label(m,bg='#8ee5ee',font=("Helvetica",15,'bold'),fg='#ee7600')
+date=Label(m,bg='#8ee5ee',font=("Helvetica",15),fg='#ee7600')
 
 next=Button(m,text=">",width=2,height=2,textvariable=counter1,command=nex,bg='#ee7600',activeforeground="yellow",activebackground="#008b8b")
-next.grid(row=10,column=2)
+next.grid(row=12,column=2)
 previous=Button(m,text="<",width=2,height=2,textvariable=counter2,command=pre,bg='#ee7600',activeforeground="yellow",activebackground="#008b8b")
-previous.grid(row=10,column=1)
+previous.grid(row=12,column=1)
+r=Label(m,bg='#8ee5ee',font=("Helvetica",15),fg='#ee7600')
+r.grid(row=14,column=4)
+
+
+'''url = "http://openweathermap.org/img/w/10d.png"
+
+u = urllib.urlopen(url)
+raw_data = u.read()
+u.close()
+
+im = Image.open(BytesIO(raw_data))
+image = ImageTk.PhotoImage(im)
+label = tkLabel(image=image)
+label.pack()
+root.mainloop()'''
+
 m.mainloop()
 
